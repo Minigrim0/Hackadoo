@@ -4,5 +4,5 @@ import courses.views as views
 
 
 urlpatterns = [
-    path('/', views.home),
+    path('/', views.dashboard, name="dashboard"),
 ]
