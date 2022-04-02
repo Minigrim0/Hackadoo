@@ -4,8 +4,8 @@ import users.views as views
 
 
 urlpatterns = [
-    path('login/', views.login, name="users_login"),
-    path('logout/', views.logout, name="users_logout"),
+    path('login/', views.login_view, name="users_login"),
+    path('logout/', views.logout_view, name="users_logout"),
     path('settings/', views.settings, name="users_settings"),
     path('', views.home, name="users_home"),
 ]

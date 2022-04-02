@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'courses',
     'users',
+    'hackadoo'
 ]
 
 MIDDLEWARE = [
@@ -72,6 +73,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hackadoo.wsgi.application'
 AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = "users_login"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
