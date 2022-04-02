@@ -1,6 +1,5 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
@@ -47,18 +46,18 @@
             <div class="modal-content">
                 <form action = "{% url "submit_exam" %}" method = "post">
                     {% csrf_token %}
-                  <div class="modal-header">
-                    <h5 class="modal-title">Submit Exam Results</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Submit Exam Results</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
-                  <div class="modal-body al-left" >
-                    
+                    <div class="modal-body al-left" >
                         <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Select course </label>
-                            <input id = "event" required="required" name = "event" ></input>
+                            <div style="margin-left: 2%;margin-right: 2%">
+                                {{ courseForm.as_p }}
+                            </div>
                         </div>
 
                         <div style = "margin-top:2% ">
@@ -66,14 +65,13 @@
                             <input id = "event" required="required" name = "event" type="number"></input>
                         </div>
 
-
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Difficulty rating </label>
                             <select required class="form-select" aria-label="Default select example">
                                 {%for i in "0123456789"%}
-                                <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                    <option value="{{forloop.counter}}">{{forloop.counter}}</option>
                                 {%endfor%}
-                            </select>                             
+                            </select>
 
                         </div>
                         <div style = "margin-top:2% ">
@@ -83,15 +81,12 @@
                                 <option value="2">Failed</option>
                             </select>                        
                         </div>
-              
-
 
                     </div>
-                  <div class ="modal-footer">
-
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-                  </form>
+                    <div class ="modal-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -128,8 +123,6 @@
             <span>Graphs</span></a>
     </li>
 
-
-
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
@@ -141,8 +134,5 @@
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
-
-
-
 </ul>
 <!-- End of Sidebar -->
