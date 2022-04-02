@@ -15,7 +15,7 @@ RUN mkdir $APP_HOME/static
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apk update && apk add libpq
+RUN apk update && apk add libpq gcc python3-dev musl-dev postgresql-dev
 RUN pip install poetry
 RUN poetry install
 
