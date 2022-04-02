@@ -8,12 +8,6 @@ class UserAdmin(admin.ModelAdmin):
     search_fields = ('username',)
 
 
-@admin.register(models.Parameter)
-class ParameterAdmin(admin.ModelAdmin):
-    list_display = ('study_time_per_day', 'study_days_per_week', 'study_bloc_size')
-    search_fields = ('study_time_per_day', 'study_days_per_week', 'study_bloc_size')
-
-
 @admin.register(models.StudentToCourse)
 class StudentToCourseAdmin(admin.ModelAdmin):
     list_display = ('student', 'course', 'status', 'note', 'participation_to_the_course')
