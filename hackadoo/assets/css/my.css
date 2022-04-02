@@ -4,3 +4,11 @@
 .al-left{
     text-align:left;
 }
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding: 0px 0px 0px 0px;
+    border: none;
+    text-align:center;
+}

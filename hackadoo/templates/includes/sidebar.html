@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{% url "home" %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>My schedule</span></a>
     </li>
@@ -29,17 +29,17 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        {% user_courses user as courses %}
-        {% for course in courses %}
-            <a href="#">
+    {% user_courses user as courses %}
+    {% for course in courses %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "course" course.id %}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>{{ course.name }}</span>
             </a>
+        </li>
         {% empty %}
             No courses :/
         {% endfor %}
-    </li>
 
     <div class="modal" id = "SubmitExam" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -62,24 +62,29 @@
 
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Hours spent studying </label>
-                            <input id = "event" required="required" name = "event" type="number"></input>
+                            <input id="event" required="required" name="hours_spent" type="number"></input>
                         </div>
 
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Difficulty rating </label>
-                            <select required class="form-select" aria-label="Default select example">
-                                {%for i in "0123456789"%}
+                            <select required class="form-select" name="rating" aria-label="Default select example">
+                                {% for i in "0123456789" %}
                                     <option value="{{forloop.counter}}">{{forloop.counter}}</option>
-                                {%endfor%}
+                                {% endfor %}
                             </select>
-
                         </div>
+
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Results </label>
-                            <select required class="form-select" aria-label="Default select example">
-                                <option value="1">Passed</option>
-                                <option value="2">Failed</option>
-                            </select>                        
+                            <select required class="form-select" name="status" aria-label="Default select example">
+                                <option value="succeeded">Passed</option>
+                                <option value="failed">Failed</option>
+                            </select>
+                        </div>
+
+                        <div style = "margin-top:2% ">
+                            <label style="margin-left: 2%;margin-right: 2%">Grade </label>
+                            <input id="event" required="required" name="grade" type="number" min="0" max="20"></input>
                         </div>
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Attended the course </label>
@@ -124,7 +129,8 @@
     <li class="nav-item">
         <a class="nav-link" href="{% url "charts" %}">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Graphs</span></a>
+            <span>Graphs</span>
+        </a>
     </li>
 
     <!-- Divider -->

@@ -30,22 +30,12 @@ class University(models.Model):
         return self.name
 
 class TimeTable(models.Model):
-    days = (
-        ('Lundi', 'Lundi'),
-        ('Mardi', 'Mardi'),
-        ('Mercredi', 'Mercredi'),
-        ('Jeudi', 'Jeudi'),
-        ('Vendredi', 'Vendredi'),
-        ('Samedi', 'Samedi'),
-        ('Dimanche', 'Dimanche'),
-    )
-
-    day = models.CharField(choices=days, max_length=10, default="Monday")
+    day = models.DateField("date", auto_now=False, auto_now_add=False)
     start_hour = models.TimeField(default="08:00:00")
     end_hour = models.TimeField(default="09:00:00")
 
     def __str__(self):
-        return self.day + " " + str(self.start_hour) + "-" + str(self.end_hour)
+        return str(self.day) + " " + str(self.start_hour) + "-" + str(self.end_hour)
 
 
 class Block(models.Model):
@@ -76,13 +66,26 @@ class Schedule(models.Model):
     name = models.CharField(max_length=200, default="Planning de ouf fréro")
     user = models.ForeignKey("users.User", verbose_name="Utilisateur du schedule", on_delete=models.CASCADE)
 
+    @property
+    def start_date(self):
+        if len(self.block_set.all()) == 0:
+            return "AGADIDADO"
+        return self.block_set.all().order_by("time_table__day", "time_table__start_hour").first().time_table.day 
+    
+    @property
+    def end_date(self):
+        if len(self.block_set.all()) == 0:
+            return "AGADIDADO"
+        return self.block_set.all().order_by("time_table__day", "time_table__start_hour").last().time_table.day
+    
+
 
 class Parameter(models.Model):
     schedule = models.OneToOneField("courses.Schedule", verbose_name="schedule de l'object parametres", on_delete=models.CASCADE)
 
-    study_time_per_day = models.PositiveIntegerField(default=0, verbose_name="Temps d'étude par jour")
-    study_days_per_week = models.PositiveIntegerField(default=0, verbose_name="Jours d'étude par semaine")
-    study_bloc_size = models.PositiveIntegerField(default=0, verbose_name="Taille d'un bloc d'étude")
+    study_time_per_day = models.TimeField(default="08:00:00", verbose_name="Temps d'étude par jour")
+    study_days_per_week = models.PositiveIntegerField(default=7, verbose_name="Jours d'étude par semaine")
+    study_bloc_size = models.TimeField(default="08:00:00", verbose_name="Taille d'un bloc d'étude")
     starting_hour = models.TimeField(default="08:00:00")
-    ending_hour = models.TimeField(default="09:00:00")
+    ending_hour = models.TimeField(default="18:00:00")
     pause_duration = models.TimeField(default="00:30:00", verbose_name="Durée de la pause")
