@@ -15,7 +15,7 @@ class User(AbstractUser):
     courses = models.ManyToManyField("courses.Course", verbose_name="Follows")
 
     parameters = models.OneToOneField("users.Parameter", verbose_name="parametre d'étude", on_delete=models.CASCADE)
-    courses = models.ManyToManyField("courses.Course", verbose_name="Cours suivits", through="users.StudentCourse")
+    courses = models.ManyToManyField("courses.Course", verbose_name="Cours suivits", through="users.StudentToCourse")
 
 
 class Parameter(models.Model):
