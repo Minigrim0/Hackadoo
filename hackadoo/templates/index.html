@@ -12,51 +12,27 @@
                     </div>
 
                     <div class="row">
-
-                        <!-- Area Chart -->
-                        <div class="col-xl-12 col-lg-12">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex justify-content-between">
-                                    <h6 class="mr-auto p-2 font-weight-bold text-primary">Exam Period: 10-05-2022 to 30-06-2022</h6>
-                                    <a href="#" class="p-2 mr-3 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                        class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
-                                    <a href="#" class=" bg-danger p-2 d-none d-sm-inline-block btn btn-sm shadow-sm"><i
-                                        class=" text-white fas fa-trash fa-sm "></i></a>
-                                    
-                                    
-                                    
-                                </div>
-                                <!-- Card Body -->
-                                <p>futur calendrier samèr</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-12 col-lg-12">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Calendar</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
+                        {% for schedule in schedules %}
+                            <!-- Area Chart -->
+                            <div class="col-xl-12 col-lg-12">
+                                <div class="card shadow mb-4">
+                                    <!-- Card Header - Dropdown -->
+                                    <div
+                                        class="card-header py-3 d-flex justify-content-between">
+                                        <h6 class="mr-auto p-2 font-weight-bold text-primary">{{schedule.name}}</h6>
+                                        <a href="#" class="p-2 mr-3 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                            class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
+                                        <a href="{% url 'delete_schedule' schedule.id %}" class=" bg-danger p-2 d-none d-sm-inline-block btn btn-sm shadow-sm"><i
+                                            class=" text-white fas fa-trash fa-sm "></i></a>
+                                        
+                                        
+                                        
                                     </div>
+                                    <!-- Card Body -->
+                                    <p>futur calendrier samèr</p>
                                 </div>
-                                <!-- Card Body -->
-                                <p>futur calendrier samèr</p>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 <!-- /.container-fluid -->
                 </div>
@@ -64,7 +40,7 @@
     <div class="modal" id = "AddSchedule" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action = "#" method = "post">
+                <form action = "{% url 'add_schedule' %}" method = "post">
                     {% csrf_token %}
                   <div class="modal-header">
                     <h5 class="modal-title">Add a schedule</h5>
@@ -73,49 +49,141 @@
                     </button>
                   </div>
 
-                  <div class="modal-body al-left" >
-                          <div style = "margin-top:2% ">
-                              <label style="margin-left: 2%;margin-right: 2%">Wished Daily Study Time </label>
-                              <input type = "checkbox" id = "available" name = "WishedDailyStudyTime" ></input>
-                          </div>
+                  <div class="modal-body al-left row " >
+                      <div class="col-4 border-right">
+                          <h5>Courses </h5>
+                          {% for s2c in s2c_qs %}
+                            <input type="checkbox" value="{{s2c.course.id}}" checked> {{s2c.course.name}}
+                          {% endfor %}
+                      </div>
+                        <div class="col-8">
+                            <div class="row" style = "margin-top:2% ">
+                                    <div class="col-7">
+                                            <label style="margin-left: 2%;">Wished Daily Study Time </label>
+                                    </div>
+                                    <div class="col-5 al-right">
+                                            <select name = "study_time_per_day_hours" required class="form-select" >
+                                                {%for i in "aaaaaaaaaaaaaaaaaaaaaaa"%}
+                                                <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                                {%endfor%}
+                                            </select> h
+                                            <select name = "study_time_per_day_minutes" required class="form-select" >
+                                                {% with '00 15 30 45' as list %}
+                                                    {%for i in list.split %}
+                                                        <option value="{{i}}">{{i}}</option>
+                                                    {%endfor%}
+                                                {% endwith %}
+                                            </select>
+                                    </div>
+                                </div>
 
-                          <div style = "margin-top:2% ">
-                              <label style="margin-left: 2%;margin-right: 2%">Breaks Duration </label>
-                              <input id = "code" required="required" name = "BreakDuration" ></input>
-                          </div>
+                            <div class="row" style = "margin-top:2% ">
+                                <div class="col-7">
+                                    <label style="margin-left: 2%;margin-right: 2%">Breaks Duration </label>
+                                </div>
+                                <div class="col-5 al-right">
+                                    <select name = "pause_duration_hours" required class="form-select" >
+                                        {%for i in "aaaaaaaaaaaaaaaaaaaaaaa"%}
+                                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                        {%endfor%}
+                                        </select> h
+                                        <select name = "pause_duration_minutes" required class="form-select" >
+                                            {% with '00 15 30 45' as list %}
+                                                {%for i in list.split %}
+                                                    <option value="{{i}}">{{i}}</option>
+                                                {%endfor%}
+                                            {% endwith %}
+                                        </select>
+                                    </div>
+                            </div>
 
-                          <div style = "margin-top:2% ">
-                              <label style="margin-left: 2%;margin-right: 2%">Day Starting Hour </label>
-                              <input id = "percent" required="required"style = "width: 20% "type = "number" step=1 name = "percent" ></input>
-                          </div>
+                                <div class="row" style = "margin-top:2% ">
+                                    <div class="col-7">
+                                        <label style="margin-left: 2%;margin-right: 2%">Day Starting Hour </label>
+                                    </div>
+                                    <div class="col-5 al-right">
+                                        <select name = "starting_hour_hours" required class="form-select" >
+                                            {%for i in "aaaaaaaaaaaaaaaaaaaaaaa"%}
+                                            <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                            {%endfor%}
+                                            </select> h
+                                            <select name = "starting_hour_minutes" required class="form-select" >
+                                                {% with '00 15 30 45' as list %}
+                                                    {%for i in list.split %}
+                                                        <option value="{{i}}">{{i}}</option>
+                                                    {%endfor%}
+                                                {% endwith %}
+                                            </select>
+                                        </div>
+                                </div>
 
-                          <div style = "margin-top:2% ">
-                              <label style="margin-left: 2%;margin-right: 2%">Day End Hour </label>
-                              <input id = "event" required="required" name = "event" ></input>
-                          </div>
+                                <div class="row" style = "margin-top:2% ">
+                                    <div class="col-7">
+                                        <label style="margin-left: 2%;margin-right: 2%">Day End Hour</label>
+                                    </div>
+                                    <div class="col-5 al-right">
+                                            <select name = "ending_hour_hours" required class="form-select" >
+                                                {%for i in "aaaaaaaaaaaaaaaaaaaaaaa"%}
+                                                <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                                {%endfor%}
+                                            </select> h
+                                            <select name = "ending_hour_minutes" required class="form-select" >
+                                                {% with '00 15 30 45' as list %}
+                                                    {%for i in list.split %}
+                                                        <option value="{{i}}">{{i}}</option>
+                                                    {%endfor%}
+                                                {% endwith %}
+                                            </select>
+                                    </div>
+                                </div>
 
-                          <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Starting Date </label>
-                            <input id = "event" required="required" name = "event" ></input>
+                                <div class="row" style = "margin-top:2% ">
+                                    <div class="col-7">
+                                        <label style="margin-left: 2%;margin-right: 2%">Starting Date </label>
+                                    </div>
+                                    <div class="col-5 al-right">
+                                        <input type="date" id = "event" required="required" name = "starting_date" ></input>
+                                    </div>
+                                </div>
+
+                                <div class="row" style = "margin-top:2% ">
+                                    <div class="col-7">
+                                        <label style="margin-left: 2%;margin-right: 2%">End Date </label>
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="date" id = "event" required="required" name = "end_date" ></input>
+                                    </div>
+                                </div>
+
+                                <div class="row" style = "margin-top:2% ">
+                                    <div class="col-7">
+                                        <label style="margin-left: 2%;margin-right: 2%">Max Study Session time </label>
+                                    </div>
+                                    <div class="col-5 al-right">
+                                        <select name = "study_bloc_size_hours" required class="form-select" >
+                                        {%for i in "aaaaaaaaaaaaaaaaaaaaaaa"%}
+                                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                        {%endfor%}
+                                        </select> h
+                                        <select name = "study_bloc_size_minutes" required class="form-select" >
+                                            {% with '00 15 30 45' as list %}
+                                                {%for i in list.split %}
+                                                    <option value="{{i}}">{{i}}</option>
+                                                {%endfor%}
+                                            {% endwith %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">End Date </label>
-                            <input id = "event" required="required" name = "event" ></input>
-                        </div>
-
-                        <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Max Study Session time </label>
-                            <input id = "event" required="required" name = "event" ></input>
-                        </div>
-
-
-                  </div>
+                  
                   <div class ="modal-footer">
 
-                      <button type="submit" class="btn btn-primary">Add</button>
+                      <button type="submit" class="btn btn-primary">Generate me a schedule SENPAI</button>
                   </div>
                   </form>
+                </div>
+            </div>
             </div>
         </div>
     </div>
