@@ -14,7 +14,7 @@ class User(AbstractUser):
     accountType = models.CharField(choices=user_types, default="student", blank=False, max_length=10)
     courses = models.ManyToManyField("courses.Course", verbose_name="Follows")
 
-    parameters = models.OneToOneField("users.Parameter", verbose_name="parametre d'étude", on_delete=models.CASCADE)
+    parameters = models.OneToOneField("users.Parameter", blank=True, null=True, verbose_name="parametre d'étude", on_delete=models.CASCADE)
     courses = models.ManyToManyField("courses.Course", verbose_name="Cours suivits", through="users.StudentToCourse")
 
 
