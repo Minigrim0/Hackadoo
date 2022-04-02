@@ -13,15 +13,34 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Schedule</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
+                        <h1 class="h3 mb-0 text-gray-800">Schedules</h1>
+                        <button data-toggle="modal" data-target="#AddSchedule" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                            class="fas fa-plus fa-sm text-white-50"></i> Create New</button>
+                        
                     </div>
 
                     <div class="row">
 
                         <!-- Area Chart -->
-                        <div class="col-xl-8 col-lg-7">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex justify-content-between">
+                                    <h6 class="mr-auto p-2 font-weight-bold text-primary">Exam Period: 10-05-2022 to 30-06-2022</h6>
+                                    <a href="#" class="p-2 mr-3 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                        class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
+                                    <a href="#" class=" bg-danger p-2 d-none d-sm-inline-block btn btn-sm shadow-sm"><i
+                                        class=" text-white fas fa-trash fa-sm "></i></a>
+                                    
+                                    
+                                    
+                                </div>
+                                <!-- Card Body -->
+                                <p>futur calendrier samèr</p>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
                             <div class="card shadow mb-4">
                                 <!-- Card Header - Dropdown -->
                                 <div
@@ -73,4 +92,62 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <div class="modal" id = "AddSchedule" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form action = "#" method = "post">
+                    {% csrf_token %}
+                  <div class="modal-header">
+                    <h5 class="modal-title">Add a schedule</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body al-left" >
+                          <div style = "margin-top:2% ">
+                              <label style="margin-left: 2%;margin-right: 2%">Wished Daily Study Time </label>
+                              <input type = "checkbox" id = "available" name = "WishedDailyStudyTime" ></input>
+                          </div>
+
+                          <div style = "margin-top:2% ">
+                              <label style="margin-left: 2%;margin-right: 2%">Breaks Duration </label>
+                              <input id = "code" required="required" name = "BreakDuration" ></input>
+                          </div>
+
+                          <div style = "margin-top:2% ">
+                              <label style="margin-left: 2%;margin-right: 2%">Day Starting Hour </label>
+                              <input id = "percent" required="required"style = "width: 20% "type = "number" step=1 name = "percent" ></input>
+                          </div>
+
+                          <div style = "margin-top:2% ">
+                              <label style="margin-left: 2%;margin-right: 2%">Day End Hour </label>
+                              <input id = "event" required="required" name = "event" ></input>
+                          </div>
+
+                          <div style = "margin-top:2% ">
+                            <label style="margin-left: 2%;margin-right: 2%">Starting Date </label>
+                            <input id = "event" required="required" name = "event" ></input>
+                        </div>
+
+                        <div style = "margin-top:2% ">
+                            <label style="margin-left: 2%;margin-right: 2%">End Date </label>
+                            <input id = "event" required="required" name = "event" ></input>
+                        </div>
+
+                        <div style = "margin-top:2% ">
+                            <label style="margin-left: 2%;margin-right: 2%">Max Study Session time </label>
+                            <input id = "event" required="required" name = "event" ></input>
+                        </div>
+
+
+                  </div>
+                  <div class ="modal-footer">
+
+                      <button type="submit" class="btn btn-primary">Add</button>
+                  </div>
+                  </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
