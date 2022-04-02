@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "hackadoo"
+version = "0.1.0"
+description = "An e-learning platform centered on Gamification"
+authors = ["Minigrim0, ZoroxaT, Nicoflo"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.0.3"
+
+[tool.poetry.dev-dependencies]
+pyproject-flake8 = "^0.0.1-alpha.3"
+rope = "^0.23.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
