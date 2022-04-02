@@ -22,25 +22,26 @@
 
                 </div>
                 <script>
-                    var xValues = ["Math", "Programming", "English", "Lorem", "Ipsum"];
-                    var yValues = [55, 49, 44, 24, 15];
-                    var barColors = [
-                    "rgba(0,0,255,1.0)",
-                    "rgba(0,0,255,0.8)",
-                    "rgba(0,0,255,0.6)",
-                    "rgba(0,0,255,0.4)",
-                    "rgba(0,0,255,0.2)",
-                    ];                    
+                    var xValues = {{courses|safe}};
+                    var yValues = {{avg_grades|safe}};
+                    var barColors = {{colors|safe}};       
                     new Chart("barChart", {
                       type: "bar",
                       data: {
                         labels: xValues,
                         datasets: [{
-                          backgroundColor: barColors,
+                          backgroundColor: "rgba(0,0,255,1.0)",
                           data: yValues
                         }]
                       },
                       options: {
+                        scales:{
+                            yAxes:[{
+                                ticks:{
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
                         legend: {display: false},
                         title: {
                           display: true,
