@@ -13,10 +13,10 @@ class Material(models.Model):
 class Course(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
-    year = models.ForeignKey("categories.Year", on_delete=models.SET_NULL)
+    year = models.ForeignKey("categories.Year", null=True, blank=True, on_delete=models.SET_NULL)
 
 
 class Year(models.Model):
     year_level = models.PositiveIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(6)], default=1, verbose_name="Année")
-    year_name = models.CharField(_(""), max_length=50, verbose_name="Nom de l'année (Primaire/Collège/Lycée)")
+    year_name = models.CharField(max_length=50, verbose_name="Nom de l'année (Primaire/Collège/Lycée)")
