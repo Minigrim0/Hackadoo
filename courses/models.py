@@ -15,6 +15,7 @@ class Course(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
     faculty = models.ForeignKey("courses.Faculty", verbose_name="Faculté du cours", on_delete=models.CASCADE)
+    ects = models.PositiveIntegerField(default=0, verbose_name="ECTS")
 
     def __str__(self):
         return self.name
