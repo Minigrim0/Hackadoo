@@ -1,5 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ course.name }}</h1>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">{{ course.name }} <small>{{course.ects}} ects</small></h1>
+        </div>
+        <hr class="m-5"/>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <h3>Course Description</h3>
+                    <p>{{ course.description }}</p>
+                </div>
+                <div class="col-6">
+                    <h3>Study Time statistics</h3>
+                    <p>No data 🙃</p>
+                    <h3>Average grade</h3>
+                    <p>No data 🙃</p>
+                    <h3>Frequently asked questions</h3>
+                    <p>No data 🙃</p>
+                    <h3>Average appreciation</h3>
+                    <p>No data 🙃</p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
