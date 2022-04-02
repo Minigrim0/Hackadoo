@@ -1,3 +1,3 @@
 ## Hackadoo
 
-On est chaud de ouf frère
+A scheduling website, gathering all data from the users in universities, to help them better manage their time.
