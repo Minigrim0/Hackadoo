@@ -1,3 +1,5 @@
+{% load sidebar %}
+
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
@@ -23,22 +25,20 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Courses Tree
+        Courses
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Sciences</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="index.html">test.html</a>
-            </div>
-        </div>
+        {% user_courses user as courses %}
+        {% for course in courses %}
+            <a href="#">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>{{ course.name }}</span>
+            </a>
+        {% empty %}
+            No courses :/
+        {% endfor %}
     </li>
 
     <div class="modal" id = "SubmitExam" tabindex="-1" role="dialog">
@@ -118,7 +118,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="{% url "charts" %}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Graphs</span></a>
     </li>
