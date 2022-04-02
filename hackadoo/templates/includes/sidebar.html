@@ -45,50 +45,51 @@
     <div class="modal" id = "SubmitExam" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <form action = "#" method = "post">
+                <form action = "{% url "submit_exam" %}" method = "post">
                     {% csrf_token %}
                   <div class="modal-header">
-                    <h5 class="modal-title">Add a schedule</h5>
+                    <h5 class="modal-title">Submit Exam Results</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
 
                   <div class="modal-body al-left" >
-                
-
-                   
-
-                          <div style = "margin-top:2% " class="btn btn-secondary dropdown-toggle"">
-                              <label style="margin-left: 2%;margin-right: 2%">Day Starting Hour </label>
-                              <input id = "dropdownMenuButton" required="required"style = "width: 20% "type = "number" step=1 name = "percent" ></input>
-                          </div>
-
-                          <div style = "margin-top:2% ">
-                              <label style="margin-left: 2%;margin-right: 2%">Day End Hour </label>
-                              <input id = "event" required="required" name = "event" ></input>
-                          </div>
-
-                          <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Starting Date </label>
+                    
+                        <div style = "margin-top:2% ">
+                            <label style="margin-left: 2%;margin-right: 2%">Select course </label>
                             <input id = "event" required="required" name = "event" ></input>
                         </div>
 
                         <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">End Date </label>
-                            <input id = "event" required="required" name = "event" ></input>
+                            <label style="margin-left: 2%;margin-right: 2%">Hours spent studying </label>
+                            <input id = "event" required="required" name = "event" type="number"></input>
                         </div>
+
 
                         <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Max Study Session time </label>
-                            <input id = "event" required="required" name = "event" ></input>
+                            <label style="margin-left: 2%;margin-right: 2%">Difficulty rating </label>
+                            <select required class="form-select" aria-label="Default select example">
+                                {%for i in "0123456789"%}
+                                <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                {%endfor%}
+                            </select>                             
+
                         </div>
+                        <div style = "margin-top:2% ">
+                            <label style="margin-left: 2%;margin-right: 2%">Results </label>
+                            <select required class="form-select" aria-label="Default select example">
+                                <option value="1">Passed</option>
+                                <option value="2">Failed</option>
+                            </select>                        
+                        </div>
+              
 
 
-                  </div>
+                    </div>
                   <div class ="modal-footer">
 
-                      <button type="submit" class="btn btn-primary">Add</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
                   </form>
             </div>
@@ -132,10 +133,10 @@
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-
-    <button data-toggle="modal" data-target="#SubmitExam" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-        class="fas  fa-sm  text-white-50"></i> Submit Exam Results</button>
-    
+    <div class="container d-flex justify-content-center mb-3"> 
+        <button data-toggle="modal" data-target="#SubmitExam" class="d-none d-sm-inline-block btn btn-success shadow-sm">Submit Exam</button>
+    </div>
+    <br>
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
