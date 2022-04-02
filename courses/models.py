@@ -2,15 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 
-class Chapter(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=500)
-    course = models.ForeignKey("courses.Course", verbose_name="Cours du chapitre", on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
-
 class Course(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
@@ -63,18 +54,32 @@ class Block(models.Model):
         ('pause', "Pause"),
     )
 
-    time_table = models.ForeignKey("schedules.TimeTable", verbose_name="Horaire", on_delete=models.CASCADE)
+    time_table = models.ForeignKey("courses.TimeTable", verbose_name="Horaire", on_delete=models.CASCADE)
     bloc_type = models.CharField(choices=bloc_types, max_length=5)
     course = models.ForeignKey("courses.Course", null=True, verbose_name="Cours", on_delete=models.CASCADE)
+    schedule = models.ForeignKey("courses.Schedule", verbose_name="Planning", on_delete=models.CASCADE)
+
+    @property
+    def index(self):
+        return self.time_table.start_hour.hour * 4 + self.time_table.start_hour.minute // 15
+
+    @property
+    def end_index(self):
+        return self.time_table.end_hour.hour * 4 + self.time_table.end_hour.minute // 15
+
+    @property
+    def size(self):
+        return (self.end_index - self.index)
 
 
 class Schedule(models.Model):
-    blocks = models.ManyToManyField("schedules.Block", verbose_name="Blocs")
+    name = models.CharField(max_length=200, default="Planning de ouf fréro")
     user = models.ForeignKey("users.User", verbose_name="Utilisateur du schedule", on_delete=models.CASCADE)
-    parameters = models.ForeignKey("courses.Parameters", verbose_name="Parametres du schedule", on_delete=models.CASCADE)
 
 
 class Parameter(models.Model):
+    schedule = models.OneToOneField("courses.Schedule", verbose_name="schedule de l'object parametres", on_delete=models.CASCADE)
+
     study_time_per_day = models.PositiveIntegerField(default=0, verbose_name="Temps d'étude par jour")
     study_days_per_week = models.PositiveIntegerField(default=0, verbose_name="Jours d'étude par semaine")
     study_bloc_size = models.PositiveIntegerField(default=0, verbose_name="Taille d'un bloc d'étude")
