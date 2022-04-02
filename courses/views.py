@@ -14,3 +14,6 @@ def courses(request, course_id=0):
     course = get_object_or_404(models.Course, id=course_id)
     user = request.user
     return render(request, 'course.html', context={'course': course, 'user': user})
+
+def charts(request):
+    return render(request, 'charts.html', context={'user': request.user})
