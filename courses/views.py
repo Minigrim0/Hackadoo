@@ -77,8 +77,7 @@ def delete_schedule(request, id=0):
     models.Schedule.objects.get(id=id).delete()
     return HttpResponseRedirect(reverse("home"))
 
-  
-  
+
 def charts(request):
     return render(request, 'charts.html', context={'user': request.user})
 
