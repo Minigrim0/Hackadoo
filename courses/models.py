@@ -18,9 +18,7 @@ class Course(models.Model):
 
 
 class Faculty(models.Model):
-    year_level = models.PositiveIntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(6)], default=1, verbose_name="Année")
-    year_name = models.CharField(max_length=50, verbose_name="Nom de l'année (Primaire/Collège/Lycée)")
+    name = models.CharField(max_length=200)
     university = models.ForeignKey("courses.University", verbose_name="Université de la fac", on_delete=models.CASCADE)
 
 class University(models.Model):
