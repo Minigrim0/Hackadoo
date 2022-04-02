@@ -29,17 +29,17 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        {% user_courses user as courses %}
-        {% for course in courses %}
-            <a href="#">
+    {% user_courses user as courses %}
+    {% for course in courses %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "course" course.id %}">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>{{ course.name }}</span>
             </a>
+        </li>
         {% empty %}
             No courses :/
         {% endfor %}
-    </li>
 
     <div class="modal" id = "SubmitExam" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -119,8 +119,8 @@
     <!-- Nav Item - Charts -->
     <li class="nav-item">
         <a class="nav-link" href="{% url "charts" %}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Graphs</span></a>
+            <span>Graphs</span>
+        </a>
     </li>
 
     <!-- Divider -->
