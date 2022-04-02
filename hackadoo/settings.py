@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'games',
+    'categories',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'hackadoo.wsgi.application'
-
+AUTH_USER_MODEL = 'users.User'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
