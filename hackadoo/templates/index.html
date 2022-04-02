@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Schedules</h1>
-                        <button data-toggle="modal" data-target="#AddSchedule" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                            class="fas fa-plus fa-sm text-white-50"></i> Create New</button>
-                        
-                    </div>
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Schedules</h1>
+            <button data-toggle="modal" data-target="#AddSchedule" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-plus fa-sm text-white-50"></i> Create New</button>
+            
+        </div>
 
                     <div class="row">
                         {% for schedule in schedules %}
@@ -24,9 +24,7 @@
                                             class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
                                         <a href="{% url 'delete_schedule' schedule.id %}" class=" bg-danger p-2 d-none d-sm-inline-block btn btn-sm shadow-sm"><i
                                             class=" text-white fas fa-trash fa-sm "></i></a>
-                                        
-                                        
-                                        
+
                                     </div>
                                     <!-- Card Body -->
                                     <p>futur calendrier samèr</p>
@@ -34,20 +32,25 @@
                             </div>
                         {% endfor %}
                     </div>
-                <!-- /.container-fluid -->
+                    <!-- Card Body -->
+                    <p>futur calendrier samèr</p>
                 </div>
+            </div>
+        </div>
+    <!-- /.container-fluid -->
+    </div>
 
     <div class="modal" id = "AddSchedule" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <form action = "{% url 'add_schedule' %}" method = "post">
                     {% csrf_token %}
-                  <div class="modal-header">
-                    <h5 class="modal-title">Add a schedule</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add a schedule</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
 
                   <div class="modal-body al-left row " >
                       <div class="col-4 border-right">
@@ -176,7 +179,6 @@
                                 </div>
                             </div>
                         </div>
-                  
                   <div class ="modal-footer">
 
                       <button type="submit" class="btn btn-primary">Generate me a schedule SENPAI</button>
@@ -184,6 +186,7 @@
                   </form>
                 </div>
             </div>
+
             </div>
         </div>
     </div>

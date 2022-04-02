@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, reverse
 import courses.models as models 
-from django.http import HttpResponseRedirect
-import datetime
+from django.http import HttpResponseRedirect, HttpResponse
 from courses.utils import schedule_this
-from users.models import StudentToCourse
+from django.contrib import messages
+import users.models as umodels
+
+import datetime
 
 
 def dashboard(request):
@@ -16,6 +18,7 @@ def courses(request, course_id=0):
     course = get_object_or_404(models.Course, id=course_id)
     user = request.user
     return render(request, 'course.html', context={'course': course, 'user': user})
+
 
 @login_required
 def add_schedule(request):
@@ -59,7 +62,7 @@ def add_schedule(request):
         )
 
         selected_courses = []
-        s2c_qs = StudentToCourse.objects.filter(student=request.user, status="running")
+        s2c_qs = umodels.StudentToCourse.objects.filter(student=request.user, status="running")
         for s2c in s2c_qs:
             course = form.get(s2c.id, "")
             if course != "":
@@ -72,4 +75,25 @@ def add_schedule(request):
 @login_required
 def delete_schedule(request, id=0):
     models.Schedule.objects.get(id=id).delete()
+    return HttpResponseRedirect(reverse("home"))
+
+  
+  
+def charts(request):
+    return render(request, 'charts.html', context={'user': request.user})
+
+
+def rate(request):
+    if request.method != "POST":
+        messages.error(request,"You can only use POST for this URL")
+        return HttpResponseRedirect(reverse("home"))
+    data = request.POST
+    course_data, _ = umodels.StudentToCourse.objects.get_or_create(student=request.user, course__id=data['course'])
+    print(data)
+    print(data['rating'])
+    course_data.rating = data['rating']
+    course_data.grade = data['grade']
+    course_data.status = data['status']
+    course_data.save()
+    messages.success(request, "Rating saved")
     return HttpResponseRedirect(reverse("home"))

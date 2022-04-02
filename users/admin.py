@@ -10,6 +10,6 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(models.StudentToCourse)
 class StudentToCourseAdmin(admin.ModelAdmin):
-    list_display = ('student', 'course', 'status', 'note', 'participation_to_the_course')
+    list_display = ('student', 'course', 'status', 'grade', 'participation_to_the_course', 'difficulty')
     list_filter = ('status',)
     search_fields = ('student', 'course')
