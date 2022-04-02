@@ -1,4 +1,7 @@
 {% load static %}
+{% load course_form %}
+
+{% course_field as courseForm %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -77,6 +80,8 @@
 
     <script src="{% static "js/demo/chart-area-demo.js" %}"></script>
     <script src="{% static "js/demo/chart-pie-demo.js" %}"></script>
+
+    {{ courseForm.media }}
 
 </body>
 </html>
