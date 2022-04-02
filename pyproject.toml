@@ -6,8 +6,8 @@ authors = ["Minigrim0, ZoroxaT, Nicoflo"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-Django = "^4.0.3"
+python = "^3.7,<3.10"
+Django = "^3.2"
 
 [tool.poetry.dev-dependencies]
 pyproject-flake8 = "^0.0.1-alpha.3"
