@@ -34,15 +34,15 @@ services:
       - static_volume:/home/app/web/static
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.orders_chifuri.entrypoints=http"
-      - "traefik.http.routers.orders_chifuri.rule=Host(`hackadoo.teamna.me`)"
-      - "traefik.http.middlewares.orders_chifuri-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.orders_chifuri.middlewares=orders_chifuri-https-redirect"
-      - "traefik.http.routers.orders_chifuri-secure.entrypoints=https"
-      - "traefik.http.routers.orders_chifuri-secure.rule=Host(`hackadoo.teamna.me`)"
-      - "traefik.http.routers.orders_chifuri-secure.tls=true"
-      - "traefik.http.routers.orders_chifuri-secure.tls.certresolver=http"
-      - "traefik.http.routers.orders_chifuri-secure.service=nginx-hackadoo@docker"
+      - "traefik.http.routers.hackadoo.entrypoints=http"
+      - "traefik.http.routers.hackadoo.rule=Host(`hackadoo.teamna.me`)"
+      - "traefik.http.middlewares.hackadoo-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.hackadoo.middlewares=hackadoo-https-redirect"
+      - "traefik.http.routers.hackadoo-secure.entrypoints=https"
+      - "traefik.http.routers.hackadoo-secure.rule=Host(`hackadoo.teamna.me`)"
+      - "traefik.http.routers.hackadoo-secure.tls=true"
+      - "traefik.http.routers.hackadoo-secure.tls.certresolver=http"
+      - "traefik.http.routers.hackadoo-secure.service=nginx-hackadoo@docker"
       - "traefik.docker.network=traefik-proxy"
     depends_on:
       - web
