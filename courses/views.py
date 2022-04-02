@@ -1,9 +1,11 @@
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-
+from django.shortcuts import get_object_or_404, reverse
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 import courses.models as models
-
+import 
 
 def dashboard(request):
     return render(request, 'home.html')
@@ -17,3 +19,9 @@ def courses(request, course_id=0):
 
 def charts(request):
     return render(request, 'charts.html', context={'user': request.user})
+
+def rate(request):
+    if request.method != "POST":
+        messages.error(request,"You can only use POST for this URL")
+        return HttpResponseRedirect(reverse("home"))
+    data = request.POST
