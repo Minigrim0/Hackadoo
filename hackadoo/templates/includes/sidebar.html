@@ -62,28 +62,29 @@
 
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Hours spent studying </label>
-                            <input id = "event" required="required" name = "event" type="number"></input>
+                            <input id="event" required="required" name="hours_spent" type="number"></input>
                         </div>
 
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Difficulty rating </label>
-                            <select required class="form-select" aria-label="Default select example">
-                                {%for i in "0123456789"%}
+                            <select required class="form-select" name="rating" aria-label="Default select example">
+                                {% for i in "0123456789" %}
                                     <option value="{{forloop.counter}}">{{forloop.counter}}</option>
-                                {%endfor%}
+                                {% endfor %}
                             </select>
-
                         </div>
+
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Results </label>
-                            <select required class="form-select" aria-label="Default select example">
-                                <option value="1">Passed</option>
-                                <option value="2">Failed</option>
-                            </select>                        
+                            <select required class="form-select" name="status" aria-label="Default select example">
+                                <option value="succeeded">Passed</option>
+                                <option value="failed">Failed</option>
+                            </select>
                         </div>
+
                         <div style = "margin-top:2% ">
                             <label style="margin-left: 2%;margin-right: 2%">Grade </label>
-                            <input id = "event" required="required" name = "event" type="number" min="0" max="20"></input>
+                            <input id="event" required="required" name="grade" type="number" min="0" max="20"></input>
                         </div>
 
                     </div>
