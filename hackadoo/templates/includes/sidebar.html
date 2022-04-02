@@ -15,7 +15,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="{% url "home" %}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>My schedule</span></a>
     </li>
@@ -119,6 +119,7 @@
     <!-- Nav Item - Charts -->
     <li class="nav-item">
         <a class="nav-link" href="{% url "charts" %}">
+            <i class="fas fa-fw fa-chart-area"></i>
             <span>Graphs</span>
         </a>
     </li>
