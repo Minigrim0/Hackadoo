@@ -15,15 +15,15 @@ RUN mkdir $APP_HOME/static
 WORKDIR $APP_HOME
 
 # install dependencies
-RUN apk update && apk add libpq gcc python3-dev musl-dev postgresql-dev
+RUN apk update && apk add libpq gcc python3-dev musl-dev postgresql-dev libffi-dev
 RUN pip install poetry
-RUN poetry install
 
 # copy entrypoint-prod.sh
 COPY ./entrypoint.sh $APP_HOME
 
 # copy project
 COPY . $APP_HOME
+RUN poetry install --no-dev
 
 # chown all the files to the app user
 RUN chown -R app:app $APP_HOME
