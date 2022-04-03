@@ -147,7 +147,6 @@ def search(request):
     return render(request, 'course_list.html', context={'course_list': course_list})
 
 
-@login_required
 def schedule_view(request, schedule_id=0):
     schedule = get_object_or_404(models.Schedule, id=schedule_id)
     return render(request, 'schedule.html', context={'schedule': schedule, 'user': request.user})
