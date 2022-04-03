@@ -6,12 +6,20 @@ import math
 from datetime import datetime, timedelta
 
 class Course(models.Model):
+    class_choices = (
+        ('course_1', 'course_1'),
+        ('course_2', 'course_2'),
+        ('course_3', 'course_3'),
+        ('course_4', 'course_4'),
+        ('course_5', 'course_5'),
+    )
+
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
     faculty = models.ForeignKey("courses.Faculty", verbose_name="Faculté du cours", on_delete=models.CASCADE)
     ects = models.PositiveIntegerField(default=0, verbose_name="ECTS")
-    course_color = models.CharField(max_length=7, default="#000000")
-    
+    course_class = models.CharField(max_length=8, choices=class_choices, default='course_1')
+
     @property
     def avg_grade(self):
         s2c_qs = self.studenttocourse_set.all()
@@ -34,7 +42,6 @@ class Course(models.Model):
 
     @property
     def avg_stars(self):
-        
         return round(self.avg_difficulty/2, 2)
     
     @property
@@ -78,7 +85,7 @@ class Block(models.Model):
 
     time_table = models.ForeignKey("courses.TimeTable", verbose_name="Horaire", on_delete=models.CASCADE)
     bloc_type = models.CharField(choices=bloc_types, max_length=5)
-    course = models.ForeignKey("courses.Course", null=True, verbose_name="Cours", on_delete=models.CASCADE)
+    course = models.ForeignKey("courses.Course", null=True, blank=True, verbose_name="Cours", on_delete=models.CASCADE)
     schedule = models.ForeignKey("courses.Schedule", verbose_name="Planning", on_delete=models.CASCADE)
 
     @property

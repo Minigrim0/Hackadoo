@@ -1,1 +1,65 @@
-body{font-family:Helvetica Neue,Helvetica,Arial,sans-serif;color:#333;font-size:15px}a{text-decoration:none}.row-heading{font-weight:500;font-size:.7em;text-transform:uppercase}.timetable .time-label{font-size:.8em;font-weight:500}.timetable .time-entry.vip-only{background-color:#c490f5;border:1px solid #6a16b8}.timetable .time-entry.vip-only:hover{background-color:#ae67f0}
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: #333;
+    font-size: 15px;
+}
+a {
+    text-decoration: none;
+}
+.row-heading {
+    font-weight: 500;
+    font-size: 0.7em;
+    text-transform: uppercase;
+}
+.timetable .time-label {
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.timetable .time-entry.break {
+    background-color: #707070;
+    border: 1px solid #000000;
+}
+.timetable .time-entry.break:hover {
+    background-color: #8d8d8d;
+}
+
+.timetable .time-entry.course_1 {
+    background-color: #721cc4;
+    border: 1px solid #4b1181;
+}
+.timetable .time-entry.course_1:hover {
+    background-color: #9140dd;
+}
+
+.timetable .time-entry.course_2 {
+    background-color: #c53642;
+    border: 1px solid #990d0d;
+}
+.timetable .time-entry.course_2:hover {
+    background-color: #ec3030;
+}
+
+.timetable .time-entry.course_3 {
+    background-color: #2ba4b9;
+    border: 1px solid #0b7191;
+}
+.timetable .time-entry.course_3:hover {
+    background-color: #39b2e2;
+}
+
+.timetable .time-entry.course_4 {
+    background-color: #aa963d;
+    border: 1px solid #837b13;
+}
+.timetable .time-entry.course_4:hover {
+    background-color: #c2ee49;
+}
+
+.timetable .time-entry.course_5 {
+    background-color: #3cac42;
+    border: 1px solid #207a1d;
+}
+.timetable .time-entry.course_5:hover {
+    background-color: #5cf74e;
+}
