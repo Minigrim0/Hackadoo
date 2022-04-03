@@ -68,11 +68,14 @@ def add_schedule(request):
 
         selected_courses = []
         s2c_qs = umodels.StudentToCourse.objects.filter(student=request.user, status="running")
+        print("QS", s2c_qs)
         for s2c in s2c_qs:
-            course = form.get(s2c.id, "")
+            course = form.get(str(s2c.course.id), "")
+            print(course)
             if course != "":
-                selected_courses.append(models.Course.objects.get(id=int(course)))
+                selected_courses.append(s2c.course)
 
+        print(selected_courses)
         schedule_this(selected_courses, request.user, parameter_obj, starting_date, end_date)
     return HttpResponseRedirect(reverse("home"))
 
