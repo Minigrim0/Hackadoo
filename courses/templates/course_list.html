@@ -11,7 +11,7 @@
         <div class="container">
             {% for course in course_list %}
                 <div class="col-12">
-                    <h3><a href="{% url 'course' course.id %}">{{ course.name }}</h3>
+                    <h3><a href="{% url 'course' course.id %}">{{ course.name }}</a></h3>
                     <p>{{ course.description }}</p>
                 </div>
                 <hr/>
