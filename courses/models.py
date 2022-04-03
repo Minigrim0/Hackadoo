@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from users.models import StudentToCourse
 
+from datetime import datetime, timedelta
+
 class Course(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1000)
@@ -67,6 +69,13 @@ class Block(models.Model):
     def size(self):
         return (self.end_index - self.index)
 
+    @property
+    def day_of_week(self):
+        days = [
+            "Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday", "Sunday"]
+        return days[self.time_table.day.weekday()]
+
 
 class Schedule(models.Model):
     name = models.CharField(max_length=200, default="Planning de ouf fréro")
@@ -83,8 +92,14 @@ class Schedule(models.Model):
         if len(self.block_set.all()) == 0:
             return "AGADIDADO"
         return self.block_set.all().order_by("time_table__day", "time_table__start_hour").last().time_table.day
-    
 
+    @property
+    def this_week(self):
+        today = datetime.today()
+        start_of_week = today - timedelta(days=today.weekday())  # Monday
+        end_of_week = start_of_week + timedelta(days=6)  # Sunday
+
+        return self.block_set.filter(time_table__day__gte=start_of_week, time_table__day__lte=end_of_week)
 
 class Parameter(models.Model):
     schedule = models.OneToOneField("courses.Schedule", verbose_name="schedule de l'object parametres", on_delete=models.CASCADE)

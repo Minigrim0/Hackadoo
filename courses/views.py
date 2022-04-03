@@ -77,8 +77,7 @@ def delete_schedule(request, id=0):
     models.Schedule.objects.get(id=id).delete()
     return HttpResponseRedirect(reverse("home"))
 
-  
-  
+
 def charts(request):
     courses = list(umodels.StudentToCourse.objects.filter(student=request.user, status="running"))
     courses = sorted(courses, key=lambda x: x.course.avg_grade, reverse=True)
