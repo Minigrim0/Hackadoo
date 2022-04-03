@@ -2,7 +2,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from users.models import StudentToCourse
-
+import math
 from datetime import datetime, timedelta
 
 class Course(models.Model):
@@ -18,10 +18,38 @@ class Course(models.Model):
         grades = s2c_qs.values_list('grade')
         grades = [x[0] for x in grades]
         return round(sum(grades) / len(grades), 2)
+    
+    @property
+    def avg_difficulty(self):
+        s2c_qs = self.studenttocourse_set.all()
+        difficulty = s2c_qs.values_list('difficulty')
+        difficulty = [x[0] for x in difficulty]
+        return round(sum(difficulty) / len(difficulty), 2)
+    @property
+    def avg_study_time(self):
+        s2c_qs = self.studenttocourse_set.all()
+        study_time = s2c_qs.values_list('study_time')
+        study_time = [x[0] for x in study_time]
+        return round(sum(study_time) / len(study_time), 2)
+
+    @property
+    def avg_stars(self):
+        
+        return round(self.avg_difficulty/2, 2)
+    
+    @property
+    def real_ects(self):
+        return math.ceil(self.avg_study_time / 25)
+
     def __str__(self):
         return self.name
 
 
+
+
+
+
+        
 class Faculty(models.Model):
     name = models.CharField(max_length=200)
     university = models.ForeignKey("courses.University", verbose_name="Université de la fac", on_delete=models.CASCADE)
