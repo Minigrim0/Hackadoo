@@ -1,5 +1,6 @@
 {% load static %}
 
+{% if user.is_authenticated %}
 <!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -157,3 +158,4 @@
     </div>
 </div>
 <!-- End of Topbar -->
+{% endif %}

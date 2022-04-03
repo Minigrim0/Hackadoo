@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from courses.utils import schedule_this
 from django.contrib import messages
 import users.models as umodels
-
+import json
 import datetime
 
 
@@ -79,7 +79,15 @@ def delete_schedule(request, id=0):
 
 
 def charts(request):
-    return render(request, 'charts.html', context={'user': request.user})
+    courses = list(umodels.StudentToCourse.objects.filter(student=request.user, status="running"))
+    courses = sorted(courses, key=lambda x: x.course.avg_grade, reverse=True)
+    avg_grades = [course.course.avg_grade for course in courses]
+    names = [course.course.name for course in courses]
+    colors = [course.course.course_color for course in courses]
+    names = json.dumps(names)
+    avg_grades = json.dumps(avg_grades)
+    colors = json.dumps(colors)
+    return render(request, 'charts.html', context={'user': request.user, "courses": names, "avg_grades": avg_grades, "colors": colors})
 
 
 def rate(request):
@@ -93,6 +101,7 @@ def rate(request):
     course_data.rating = data['rating']
     course_data.grade = data['grade']
     course_data.status = data['status']
+    course_data.attended = True if data.get("attended", "") == "on" else False
     course_data.save()
     messages.success(request, "Rating saved")
     return HttpResponseRedirect(reverse("home"))

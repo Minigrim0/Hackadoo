@@ -1,8 +1,8 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from users.models import StudentToCourse
 
 from datetime import datetime, timedelta
-
 
 class Course(models.Model):
     name = models.CharField(max_length=200)
@@ -11,6 +11,12 @@ class Course(models.Model):
     ects = models.PositiveIntegerField(default=0, verbose_name="ECTS")
     course_color = models.CharField(max_length=7, default="#000000")
 
+    @property
+    def avg_grade(self):
+        s2c_qs = self.studenttocourse_set.all()
+        grades = s2c_qs.values_list('grade').first()
+        return round(sum(grades) / len(grades), 2)
+    
     def __str__(self):
         return self.name
 
