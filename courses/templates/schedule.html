@@ -5,6 +5,7 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{% static "css/timetable/timetablejs.css" %}">
+    <link rel="stylesheet" href="{% static "css/timetable/demo.css" %}">
 {% endblock %}
 
 {% block content %}
@@ -43,11 +44,19 @@
         timetable.addLocations(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
 
         {% for block in schedule.this_week %}
-            timetable.addEvent(
-                '{{ block.course.name }}', '{{ block.day_of_week }}',
-                new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.start_hour.hour}}, {{block.time_table.start_hour.minute}}),
-                new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.end_hour.hour}}, {{block.time_table.end_hour.minute}}),
-                { style: {color: '{{ block.course.color }}'} });
+            {% if block.bloc_type == 'study' %}
+                timetable.addEvent(
+                    '{{ block.course.name }}', '{{ block.day_of_week }}',
+                    new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.start_hour.hour}}, {{block.time_table.start_hour.minute}}),
+                    new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.end_hour.hour}}, {{block.time_table.end_hour.minute}}),
+                    {class: '{{ block.course.course_class }}'});
+            {% else %}
+                timetable.addEvent(
+                    'Break', '{{ block.day_of_week }}',
+                    new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.start_hour.hour}}, {{block.time_table.start_hour.minute}}),
+                    new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.end_hour.hour}}, {{block.time_table.end_hour.minute}}),
+                    {class: 'break'});
+            {% endif %}
         {% endfor %}
 
         var renderer = new Timetable.Renderer(timetable);

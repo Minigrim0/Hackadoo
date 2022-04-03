@@ -125,7 +125,10 @@ def gen_ics(request, schedule_id=0):
     calendar = Calendar()
     for block in schedule.block_set.all():
         event = Event()
-        event.name = block.course.name
+        if block.bloc_type == "pause":
+            event.name = "Break"
+        else:
+            event.name = block.course.name
         event.begin = datetime.datetime.combine(block.time_table.day, block.time_table.start_hour)
         event.end = datetime.datetime.combine(block.time_table.day, block.time_table.end_hour)
         calendar.events.add(event)
