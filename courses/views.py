@@ -96,9 +96,9 @@ def rate(request):
         return HttpResponseRedirect(reverse("home"))
     data = request.POST
     course_data, _ = umodels.StudentToCourse.objects.get_or_create(student=request.user, course__id=data['course'])
+
     print(data)
-    print(data['rating'])
-    course_data.rating = data['rating']
+    course_data.difficulty = data['rating']
     course_data.grade = data['grade']
     course_data.status = data['status']
     course_data.attended = True if data.get("attended", "") == "on" else False
