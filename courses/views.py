@@ -50,8 +50,8 @@ def add_schedule(request):
             hour=int(form.get("study_bloc_size_hours", 0)),
             minute=int(form.get("study_bloc_size_minutes", 0))
         )
-        starting_date = datetime.datetime.strptime(form.get("starting_date", 0), "%Y-%m-%d").time()
-        end_date = datetime.datetime.strptime(form.get("end_date", 0), "%Y-%m-%d").time()
+        starting_date = datetime.datetime.strptime(form.get("starting_date", 0), "%Y-%m-%d")
+        end_date = datetime.datetime.strptime(form.get("end_date", 0), "%Y-%m-%d").replace(hour=23, minute=59)
         schedule = models.Schedule.objects.create(
             name=f"Schedule : {form.get('starting_date', 0)} to {form.get('end_date', 0)}",
             user=request.user
