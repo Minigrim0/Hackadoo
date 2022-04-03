@@ -1,144 +1,146 @@
 {% load sidebar %}
 
-<!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-    <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+{% if user.is_authenticated %}
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Uni Planner</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url "home" %}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>My schedule</span></a>
+        </li>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Courses
         </div>
-        <div class="sidebar-brand-text mx-3">Uni Planner</div>
-    </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+        <!-- Nav Item - Pages Collapse Menu -->
+        {% user_courses user as courses %}
+        {% for course in courses %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url "course" course.id %}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>{{ course.name }}</span>
+                </a>
+            </li>
+            {% empty %}
+                No courses :/
+            {% endfor %}
 
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{% url "home" %}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>My schedule</span></a>
-    </li>
+        <div class="modal" id = "SubmitExam" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <form action = "{% url "submit_exam" %}" method = "post">
+                        {% csrf_token %}
+                        <div class="modal-header">
+                            <h5 class="modal-title">Submit Exam Results</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
+                        <div class="modal-body al-left" >
+                            <div style = "margin-top:2% ">
+                                <div style="margin-left: 2%;margin-right: 2%">
+                                    {{ courseForm.as_p }}
+                                </div>
+                            </div>
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Courses
-    </div>
+                            <div style = "margin-top:2% ">
+                                <label style="margin-left: 2%;margin-right: 2%">Hours spent studying </label>
+                                <input id="event" required="required" name="hours_spent" type="number"></input>
+                            </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    {% user_courses user as courses %}
-    {% for course in courses %}
+                            <div style = "margin-top:2% ">
+                                <label style="margin-left: 2%;margin-right: 2%">Difficulty rating </label>
+                                <select required class="form-select" name="rating" aria-label="Default select example">
+                                    {% for i in "0123456789" %}
+                                        <option value="{{forloop.counter}}">{{forloop.counter}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div style = "margin-top:2% ">
+                                <label style="margin-left: 2%;margin-right: 2%">Results </label>
+                                <select required class="form-select" name="status" aria-label="Default select example">
+                                    <option value="succeeded">Passed</option>
+                                    <option value="failed">Failed</option>
+                                </select>
+                            </div>
+
+                            <div style = "margin-top:2% ">
+                                <label style="margin-left: 2%;margin-right: 2%">Grade </label>
+                                <input id="event" required="required" name="grade" type="number" min="0" max="20"></input>
+                            </div>
+
+                        </div>
+                        <div class ="modal-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Features
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link" href="{% url "course" course.id %}">
-                <i class="fas fa-fw fa-cog"></i>
-                <span>{{ course.name }}</span>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                aria-expanded="true" aria-controls="collapsePages">
+                <i class="fas fa-fw fa-folder"></i>
+                <span>Pages</span>
+            </a>
+            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Login Screens:</h6>
+                    <a class="collapse-item" href="login.html">Login</a>
+                    <a class="collapse-item" href="register.html">Register</a>
+                    <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
+                </div>
+            </div>
+        </li>
+
+        <!-- Nav Item - Charts -->
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "charts" %}">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Graphs</span>
             </a>
         </li>
-        {% empty %}
-            No courses :/
-        {% endfor %}
 
-    <div class="modal" id = "SubmitExam" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form action = "{% url "submit_exam" %}" method = "post">
-                    {% csrf_token %}
-                    <div class="modal-header">
-                        <h5 class="modal-title">Submit Exam Results</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
 
-                    <div class="modal-body al-left" >
-                        <div style = "margin-top:2% ">
-                            <div style="margin-left: 2%;margin-right: 2%">
-                                {{ courseForm.as_p }}
-                            </div>
-                        </div>
-
-                        <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Hours spent studying </label>
-                            <input id="event" required="required" name="hours_spent" type="number"></input>
-                        </div>
-
-                        <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Difficulty rating </label>
-                            <select required class="form-select" name="rating" aria-label="Default select example">
-                                {% for i in "0123456789" %}
-                                    <option value="{{forloop.counter}}">{{forloop.counter}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Results </label>
-                            <select required class="form-select" name="status" aria-label="Default select example">
-                                <option value="succeeded">Passed</option>
-                                <option value="failed">Failed</option>
-                            </select>
-                        </div>
-
-                        <div style = "margin-top:2% ">
-                            <label style="margin-left: 2%;margin-right: 2%">Grade </label>
-                            <input id="event" required="required" name="grade" type="number" min="0" max="20"></input>
-                        </div>
-
-                    </div>
-                    <div class ="modal-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
+        <div class="container d-flex justify-content-center mb-3"> 
+            <button data-toggle="modal" data-target="#SubmitExam" class="d-none d-sm-inline-block btn btn-success shadow-sm">Submit Exam</button>
         </div>
-    </div>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Features
-    </div>
-
-    <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-            aria-expanded="true" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Login Screens:</h6>
-                <a class="collapse-item" href="login.html">Login</a>
-                <a class="collapse-item" href="register.html">Register</a>
-                <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            </div>
+        <br>
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
-    </li>
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link" href="{% url "charts" %}">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Graphs</span>
-        </a>
-    </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider d-none d-md-block">
-
-    <div class="container d-flex justify-content-center mb-3"> 
-        <button data-toggle="modal" data-target="#SubmitExam" class="d-none d-sm-inline-block btn btn-success shadow-sm">Submit Exam</button>
-    </div>
-    <br>
-    <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
-</ul>
-<!-- End of Sidebar -->
+    </ul>
+    <!-- End of Sidebar -->
+{% endif %}
