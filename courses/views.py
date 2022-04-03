@@ -1,13 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, reverse
 import courses.models as models 
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, FileResponse
 from courses.utils import schedule_this
 from django.contrib import messages
 import users.models as umodels
 import json
 import datetime
+import io
 
+from wsgiref.util import FileWrapper
 from ics import Calendar, Event
 
 
@@ -88,11 +90,15 @@ def gen_ics(request, schedule_id=0):
     for block in schedule.block_set.all():
         event = Event()
         event.name = block.course.name
-        event.begin = datetime.combine(block.time_table.day, block.time_table.starting_hour)
-        event.end = datetime.combine(block.time_table.day, block.time_table.ending_hour)
-        c.events.add(e)
+        event.begin = datetime.datetime.combine(block.time_table.day, block.time_table.start_hour)
+        event.end = datetime.datetime.combine(block.time_table.day, block.time_table.end_hour)
+        calendar.events.add(event)
 
-    return HttpResponse(cal.ics(events))
+    ics_file = io.StringIO(str(calendar))
+
+    response = HttpResponse(FileWrapper(ics_file), content_type="text/ics")
+    response['Content-disposition'] = f"attachment; filename={schedule.name}.ics"
+    return response
 
 
 @login_required
