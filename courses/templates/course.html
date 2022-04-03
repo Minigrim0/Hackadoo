@@ -15,6 +15,8 @@
                     <p>{{ course.description }}</p>
                 </div>
                 <div class="col-6">
+                    <h3>Real ECTS Estimation</h3>
+                    <p style="color: {%if course.real_ects > course.ects%} red {% else %} green {%endif%}">{{course.real_ects}} Credits</p>
                     <h3>Study Time statistics</h3>
                     <p>{{course.avg_study_time}} hours in average</p>
                     <h3>Average grade</h3>

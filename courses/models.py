@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from users.models import StudentToCourse
-
+import math
 from datetime import datetime, timedelta
 
 class Course(models.Model):
@@ -35,6 +35,10 @@ class Course(models.Model):
     def avg_stars(self):
         
         return round(self.avg_difficulty/2, 2)
+    
+    @property
+    def real_ects(self):
+        return math.ceil(self.avg_study_time / 25)
 
     def __str__(self):
         return self.name
