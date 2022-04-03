@@ -1,6 +1,6 @@
 {% load sidebar %}
 
-{% if user.is_authenticated %}
+{% if request.user.is_authenticated %}
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <!-- Sidebar - Brand -->
