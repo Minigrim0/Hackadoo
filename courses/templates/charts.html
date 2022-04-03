@@ -15,7 +15,9 @@
 
                     
                                 <canvas id="barChart"></canvas>
-                    
+                                <canvas id="barChart2"></canvas>
+                                <canvas id="barChart3"></canvas>
+
                         </div>
 
                     </div>
@@ -32,6 +34,59 @@
                         datasets: [{
                           backgroundColor: "rgba(0,0,255,1.0)",
                           data: yValues
+                        }]
+                      },
+                      options: {
+                        scales:{
+                            yAxes:[{
+                                ticks:{
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend: {display: false},
+                        title: {
+                          display: true,
+                          text: "Courses average grade"
+                        }
+                      }
+                    });
+
+                    var xValues2 = {{courses_difficulty|safe}};
+                    var yValues2 = {{avg_difficulty|safe}};
+                    new Chart("barChart2", {
+                      type: "bar",
+                      data: {
+                        labels: xValues2,
+                        datasets: [{
+                          backgroundColor: "rgba(0,255,0,1.0)",
+                          data: yValues2
+                        }]
+                      },
+                      options: {
+                        scales:{
+                            yAxes:[{
+                                ticks:{
+                                    beginAtZero: true
+                                }
+                            }]
+                        },
+                        legend: {display: false},
+                        title: {
+                          display: true,
+                          text: "Courses average difficulty"
+                        }
+                      }
+                    });
+                    var xValues3 = {{names_study_time|safe}};
+                    var yValues3 = {{avg_study_time|safe}};
+                    new Chart("barChart3", {
+                      type: "bar",
+                      data: {
+                        labels: xValues3,
+                        datasets: [{
+                          backgroundColor: "rgba(255,0,0,1.0)",
+                          data: yValues3
                         }]
                       },
                       options: {

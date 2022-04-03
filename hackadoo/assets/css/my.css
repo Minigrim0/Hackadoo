@@ -12,3 +12,9 @@ select {
     border: none;
     text-align:center;
 }
+.rating-color {
+    color: #fbc634 !important;
+}
+.no-color {
+    color: rgba(0,0,0,0);
+}

@@ -81,15 +81,41 @@ def delete_schedule(request, id=0):
 
 @login_required
 def charts(request):
-    courses = list(umodels.StudentToCourse.objects.filter(student=request.user, status="running"))
-    courses = sorted(courses, key=lambda x: x.course.avg_grade, reverse=True)
+    courses_qs = list(umodels.StudentToCourse.objects.filter(student=request.user, status="running"))
+    courses = sorted(courses_qs, key=lambda x: x.course.avg_grade, reverse=True)    
     avg_grades = [course.course.avg_grade for course in courses]
     names = [course.course.name for course in courses]
     colors = [course.course.course_color for course in courses]
     names = json.dumps(names)
     avg_grades = json.dumps(avg_grades)
     colors = json.dumps(colors)
-    return render(request, 'charts.html', context={'user': request.user, "courses": names, "avg_grades": avg_grades, "colors": colors})
+    courses = sorted(courses_qs, key=lambda x: x.course.avg_difficulty, reverse=True)  
+    avg_difficulty = [course.course.avg_difficulty for course in courses]
+    names_difficulty = [course.course.name for course in courses]
+    colors_difficulty = [course.course.course_color for course in courses]
+    avg_difficulty = json.dumps(avg_difficulty)
+    names_difficulty = json.dumps(names_difficulty)    
+    colors_difficulty = json.dumps(colors_difficulty)     
+    
+    courses = sorted(courses_qs, key=lambda x: x.course.avg_study_time, reverse=True)  
+    avg_study_time = [course.course.avg_study_time for course in courses]
+    names_study_time = [course.course.name for course in courses]
+    colors_study_time = [course.course.course_color for course in courses]
+    avg_study_time = json.dumps(avg_study_time)
+    names_study_time = json.dumps(names_study_time)    
+    colors_study_time = json.dumps(colors_study_time)   
+    return render(request, 'charts.html', context={
+        'user': request.user,
+        "courses": names,
+        "avg_grades": avg_grades,
+        "colors": colors,
+        "avg_difficulty": avg_difficulty,
+        "courses_difficulty": names_difficulty,
+        "colors_difficulty": colors_difficulty,
+        "avg_study_time": avg_study_time, 
+        "names_study_time": names_study_time, 
+        "colors_study_time": colors_study_time, 
+        })
 
 
 @login_required
