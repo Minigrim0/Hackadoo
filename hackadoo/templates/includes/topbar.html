@@ -10,18 +10,24 @@
     </button>
 
     <!-- Topbar Search -->
-    <form
+    <div
         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for courses..."
+            <input type="text" id="search_input" class="form-control bg-light border-0 small" placeholder="Search for courses..."
                 aria-label="Search" aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
+                <button class="btn btn-primary" type="button" onclick="search()">
                     <i class="fas fa-search fa-sm"></i>
                 </button>
             </div>
+            <script>
+                function search(){
+                    var search = document.getElementById('search_input').value;
+                    window.location.href = "{% url "search" %}?q=" + search;
+                }
+            </script>
         </div>
-    </form>
+    </div>
 
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
@@ -133,7 +139,6 @@
                 </a>
             </div>
         </li>
-
     </ul>
 
 </nav>

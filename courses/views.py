@@ -102,6 +102,13 @@ def gen_ics(request, schedule_id=0):
 
 
 @login_required
+def search(request):
+    query = request.GET.get("q", "")
+    course_list = models.Course.objects.filter(name__icontains=query)
+    return render(request, 'course_list.html', context={'course_list': course_list})
+
+
+@login_required
 def schedule_view(request, schedule_id=0):
     schedule = get_object_or_404(models.Schedule, id=schedule_id)
     return render(request, 'schedule.html', context={'schedule': schedule, 'user': request.user})

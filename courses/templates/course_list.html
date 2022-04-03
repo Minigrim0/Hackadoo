@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Research: {{ search }} <small>{{ course_list|length }} result{{ course_list|pluralize }}</small></h1>
+        </div>
+        <hr class="m-5"/>
+        <div class="container">
+            {% for course in course_list %}
+                <div class="col-12">
+                    <h3><a href="{% url 'course' course.id %}">{{ course.name }}</h3>
+                    <p>{{ course.description }}</p>
+                </div>
+                <hr/>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
