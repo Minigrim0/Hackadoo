@@ -15,7 +15,7 @@
             class="card-header py-3 d-flex justify-content-between">
             <h6 class="mr-auto p-2 font-weight-bold text-primary"><a href="{% url "schedule" schedule.id %}">{{schedule.name}}</a></h6>
             <button type="button" onclick="genQR('{{ schedule.url }}')" class="btn btn-primary mr-3" data-toggle="modal" data-target="#qrCodeModal">
-                Generate a QR code
+                <i class="fa fa-qrcode"></i> Generate a QR code
             </button>
             <a href="{% url 'generate_ics' schedule.id %}" class="p-2 mr-3 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                 class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
