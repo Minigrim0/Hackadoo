@@ -7,26 +7,20 @@
 
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Courses stats</h1>
-               
+
                     <!-- Content Row -->
                     <div class="row">
-
                         <div class="col-xl-10 col-lg-7">
-
-                    
                                 <canvas id="barChart"></canvas>
                                 <canvas id="barChart2"></canvas>
                                 <canvas id="barChart3"></canvas>
-
                         </div>
-
                     </div>
 
                 </div>
                 <script>
                     var xValues = {{courses|safe}};
                     var yValues = {{avg_grades|safe}};
-                    var barColors = {{colors|safe}};       
                     new Chart("barChart", {
                       type: "bar",
                       data: {
