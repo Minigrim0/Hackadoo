@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static "css/timetable/timetablejs.css" %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div
+            class="card-header py-3 d-flex justify-content-between">
+            <h6 class="mr-auto p-2 font-weight-bold text-primary"><a href="{% url "schedule" schedule.id %}">{{schedule.name}}</a></h6>
+            <button type="button" onclick="genQR('{{ schedule.url }}')" class="btn btn-primary mr-3" data-toggle="modal" data-target="#qrCodeModal">
+                Generate a QR code
+            </button>
+            <a href="#" class="p-2 mr-3 d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                class="fas fa-download fa-sm text-white-50"></i> Download iCal</a>
+            <a href="{% url 'delete_schedule' schedule.id %}" class=" bg-danger p-2 d-none d-sm-inline-block btn btn-sm shadow-sm"><i
+                class=" text-white fas fa-trash fa-sm "></i></a>
+        </div>
+
+        <hr class="m-5"/>
+        <div class="container">
+            <div class="timetable" id="timetable">
+            </div>
+        </div>
+    </div>
+
+    {% include "includes/qr-code.html" %}
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/timetable/timetable.js' %}"></script>
+    <script>
+        var timetable = new Timetable();
+
+        timetable.setScope(0,23);
+
+        timetable.addLocations(['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
+
+        {% for block in schedule.this_week %}
+            timetable.addEvent(
+                '{{ block.course.name }}', '{{ block.day_of_week }}',
+                new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.start_hour.hour}}, {{block.time_table.start_hour.minute}}),
+                new Date({{ block.time_table.day.year }}, {{ block.time_table.day.month }}, {{ block.time_table.day.day }}, {{block.time_table.end_hour.hour}}, {{block.time_table.end_hour.minute}}),
+                { style: {color: '{{ block.course.color }}'} });
+        {% endfor %}
+
+        var renderer = new Timetable.Renderer(timetable);
+        renderer.draw('#timetable');
+
+        function genQR(url) {
+            document.getElementById("qrcode").innerHTML = "";
+            var qrc = new QRCode(document.getElementById("qrcode"), window.location.origin + url);
+        }
+    </script>
+{% endblock %}
