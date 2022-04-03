@@ -9,6 +9,7 @@ import json
 import datetime
 
 
+@login_required
 def dashboard(request):
     return render(request, 'home.html')
 
@@ -78,6 +79,7 @@ def delete_schedule(request, id=0):
     return HttpResponseRedirect(reverse("home"))
 
 
+@login_required
 def charts(request):
     courses = list(umodels.StudentToCourse.objects.filter(student=request.user, status="running"))
     courses = sorted(courses, key=lambda x: x.course.avg_grade, reverse=True)
@@ -90,6 +92,7 @@ def charts(request):
     return render(request, 'charts.html', context={'user': request.user, "courses": names, "avg_grades": avg_grades, "colors": colors})
 
 
+@login_required
 def rate(request):
     if request.method != "POST":
         messages.error(request,"You can only use POST for this URL")
