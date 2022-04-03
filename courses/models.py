@@ -10,13 +10,13 @@ class Course(models.Model):
     faculty = models.ForeignKey("courses.Faculty", verbose_name="Faculté du cours", on_delete=models.CASCADE)
     ects = models.PositiveIntegerField(default=0, verbose_name="ECTS")
     course_color = models.CharField(max_length=7, default="#000000")
-
+    
     @property
     def avg_grade(self):
         s2c_qs = self.studenttocourse_set.all()
-        grades = s2c_qs.values_list('grade').first()
+        grades = s2c_qs.values_list('grade')
+        grades = [x[0] for x in grades]
         return round(sum(grades) / len(grades), 2)
-    
     def __str__(self):
         return self.name
 
