@@ -3,6 +3,11 @@ import courses.models as cmodels
 import secrets
 import random
 
+nouns = ("puppy", "car", "rabbit", "girl", "monkey")
+verbs = ("runs", "hits", "jumps", "drives", "barfs") 
+adv = ("crazily.", "dutifully.", "foolishly.", "merrily.", "occasionally.")
+adj = ("adorable", "clueless", "dirty", "odd", "stupid")
+
 
 for x in range(100):
     user = User.objects.create(username=secrets.token_hex(20))
@@ -18,6 +23,10 @@ for x in range(100):
     faculty = cmodels.Faculty.objects.all().order_by('?').first()
     random_num = random.randint(100, 500)
     course = cmodels.Course.objects.create(name=f'INFO-F-{random_num}', faculty=faculty, ects=random.randint(1, 15))
+    description =  f"{nouns[random.randrange(0,5)]} {verbs[random.randrange(0,5)]} {adv[random.randrange(0,5)]} {adj[random.randrange(0,5)]}"
+    course.description = description
+    course.save()
+
 
 for user in User.objects.all():
     for x in range(7):
@@ -28,4 +37,3 @@ for user in User.objects.all():
         s2c.difficulty = random.randint(0,10)
         s2c.study_time = random.randint(0,150)
         s2c.save()
-

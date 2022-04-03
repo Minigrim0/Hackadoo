@@ -45,11 +45,6 @@ class Course(models.Model):
         return self.name
 
 
-
-
-
-
-        
 class Faculty(models.Model):
     name = models.CharField(max_length=200)
     university = models.ForeignKey("courses.University", verbose_name="Université de la fac", on_delete=models.CASCADE)
