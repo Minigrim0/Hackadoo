@@ -58,7 +58,7 @@
                         <div class="col-4 border-right">
                             <h5>Courses </h5>
                             {% for s2c in s2c_qs %}
-                                <input type="checkbox" value="{{s2c.course.id}}" checked> {{s2c.course.name}}
+                                <input type="checkbox" value="{{s2c.course.id}}" checked> {{s2c.course.name}}<br/>
                             {% endfor %}
                         </div>
 
