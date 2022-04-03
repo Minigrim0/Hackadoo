@@ -80,6 +80,12 @@ def delete_schedule(request, id=0):
 
 
 @login_required
+def schedule_view(request, schedule_id=0):
+    schedule = get_object_or_404(models.Schedule, id=schedule_id)
+    return render(request, 'schedule.html', context={'schedule': schedule, 'user': request.user})
+
+
+@login_required
 def charts(request):
     courses = list(umodels.StudentToCourse.objects.filter(student=request.user, status="running"))
     courses = sorted(courses, key=lambda x: x.course.avg_grade, reverse=True)

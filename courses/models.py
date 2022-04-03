@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from users.models import StudentToCourse
 
@@ -100,6 +101,11 @@ class Schedule(models.Model):
         end_of_week = start_of_week + timedelta(days=6)  # Sunday
 
         return self.block_set.filter(time_table__day__gte=start_of_week, time_table__day__lte=end_of_week)
+
+    @property
+    def url(self):
+        return reverse("schedule", kwargs={"schedule_id": self.id})
+
 
 class Parameter(models.Model):
     schedule = models.OneToOneField("courses.Schedule", verbose_name="schedule de l'object parametres", on_delete=models.CASCADE)
