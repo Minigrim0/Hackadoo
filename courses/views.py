@@ -190,7 +190,6 @@ def rate(request):
     data = request.POST
     course_data, _ = umodels.StudentToCourse.objects.get_or_create(student=request.user, course__id=data['course'])
 
-    print(data)
     course_data.difficulty = data['rating']
     course_data.grade = data['grade']
     course_data.status = data['status']

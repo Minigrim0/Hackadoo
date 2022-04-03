@@ -14,6 +14,11 @@ class User(AbstractUser):
     accountType = models.CharField(choices=user_types, default="student", blank=False, max_length=10)
     courses = models.ManyToManyField("courses.Course", verbose_name="Cours suivits", through="users.StudentToCourse")
 
+    @property
+    def coureses_followed(self):
+        courses = StudentToCourse.objects.filter(student=self, status='running')
+        return [x.course for x in courses]
+
 
 class StudentToCourse(models.Model):
 
