@@ -8,6 +8,8 @@ import users.models as umodels
 import json
 import datetime
 
+from ics import Calendar, Event
+
 
 @login_required
 def dashboard(request):
@@ -77,6 +79,20 @@ def add_schedule(request):
 def delete_schedule(request, id=0):
     models.Schedule.objects.get(id=id).delete()
     return HttpResponseRedirect(reverse("home"))
+
+
+@login_required
+def gen_ics(request, schedule_id=0):
+    schedule = get_object_or_404(models.Schedule, id=schedule_id)
+    calendar = Calendar()
+    for block in schedule.block_set.all():
+        event = Event()
+        event.name = block.course.name
+        event.begin = datetime.combine(block.time_table.day, block.time_table.starting_hour)
+        event.end = datetime.combine(block.time_table.day, block.time_table.ending_hour)
+        c.events.add(e)
+
+    return HttpResponse(cal.ics(events))
 
 
 @login_required

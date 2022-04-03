@@ -13,5 +13,6 @@ urlpatterns = [
     path('course/rate', views.rate, name="submit_exam"),
     path('charts', views.charts, name="charts"),
 
+    path('schedule/<int:schedule_id>/ics', views.gen_ics, name="generate_ics"),
     path('autocomplete/course', CourseAutocomplete.as_view(), name='course_autocomplete'),
 ]
